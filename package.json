@@ -2,6 +2,9 @@
   "name": "forthieth",
   "description": "A slide show thing for my parents' anniversary",
   "version": "0.0.1",
+  "engines": {
+    "node": "v11.12.0"
+  },
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build",
