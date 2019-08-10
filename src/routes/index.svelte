@@ -1,12 +1,14 @@
 <script>
   import Swiper from "swiper";
   import { afterUpdate, onMount } from "svelte";
+  import shuffle from "lodash/shuffle";
   let files = [];
   let container;
   let swiper;
 
   async function getPhotos() {
     files = await fetch("/slides.json").then(r => r.json());
+    files = shuffle(files);
     return files;
   }
 
@@ -35,7 +37,15 @@
       autoplay: true
     });
 
+    const interval = setInterval(() => {
+      getPhotos();
+    }, 60 * 1000);
+
     window.swiper = swiper;
+
+    return () => {
+      clearInterval(interval);
+    };
   });
 
   afterUpdate(() => {
@@ -56,7 +66,7 @@
   :global(img) {
     display: block;
     margin: auto;
-    opacity: 0;
+    opacity: 0.5;
     transition: opacity ease-in 0.25s;
 
     object-fit: contain;
